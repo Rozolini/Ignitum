@@ -1,0 +1,10 @@
+# Zero-copy, non-allocating WebAssembly binary format parser.
+# Designed for high-throughput decoding with minimal memory overhead.
+[package]
+name = "ignitum-parser"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# This crate is strictly #![no_std] and has no external dependencies 
+# to ensure compatibility with restricted runtime environments.

@@ -1,0 +1,16 @@
+# Low-level Windows System Abstractions for the Ignitum Runtime.
+# Provides foundational memory management and hardware-level signal handling.
+[package]
+name = "ignitum-sys"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Direct FFI bindings to the Windows API with a focus on Virtual Memory
+# and Vectored Exception Handling (VEH).
+windows-sys = { version = "0.61.2", features = [
+    "Win32_System_Memory",            # VirtualAlloc, VirtualProtect, VirtualFree
+    "Win32_Foundation",               # Common types (HANDLE, BOOL)
+    "Win32_System_Diagnostics_Debug", # AddVectoredExceptionHandler
+    "Win32_System_Kernel"             # Processor-specific intrinsics
+] }

@@ -1,0 +1,30 @@
+# Verifies the mathematical correctness of concurrent primitives (e.g., SpinMutex)
+# by simulating all possible thread interleavings to detect data races and deadlocks.
+name: Loom
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+  # Globally inject the loom configuration flag to enable loom-specific code paths.
+  RUSTFLAGS: "--cfg loom"
+
+jobs:
+  verify-concurrency:
+    name: Exhaustive Interleaving Tests
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Rust Toolchain
+        uses: dtolnay/rust-toolchain@stable
+      
+      # Executes the isolated loom test suite within the JIT engine.
+      # Bypasses standard unit tests to strictly isolate the O(n!) complexity 
+      # of Loom's state space exploration.
+      - name: Run Loom Model Checker
+        run: cargo test -p ignitum-jit --lib loom_tests

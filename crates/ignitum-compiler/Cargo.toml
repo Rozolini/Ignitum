@@ -1,0 +1,14 @@
+# High-level orchestrator for the WebAssembly translation pipeline.
+[package]
+name = "ignitum-compiler"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Internal Architecture Components
+
+# Low-level x86_64 code generation, executable memory allocation, and VEH traps.
+ignitum-jit = { path = "../ignitum-jit" }
+
+# Execution orchestration, memory instance pooling, and hardware sandboxing.
+ignitum-runtime = { path = "../ignitum-runtime" }

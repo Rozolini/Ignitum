@@ -1,0 +1,35 @@
+# Continuous Integration Pipeline for Ignitum Engine.
+# Enforces formatting, static analysis, and unit tests
+# specifically for the target Windows x86_64 environment.
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    name: Build & Test
+    # Ignitum relies on Windows-specific APIs (VirtualAlloc, VEH).
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Rust Nightly
+        uses: dtolnay/rust-toolchain@nightly
+        with:
+          components: clippy, rustfmt
+
+      - name: Check formatting
+        run: cargo fmt --all -- --check
+
+      # Enforce zero-warning policy for static analysis.
+      - name: Run Clippy
+        run: cargo clippy --workspace -- -D warnings
+
+      - name: Run tests
+        run: cargo test --workspace

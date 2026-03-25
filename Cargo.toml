@@ -1,0 +1,9 @@
+[workspace]
+members = [
+    "crates/ignitum-parser",
+    "crates/ignitum-sys",
+    "crates/ignitum-jit",
+    "crates/ignitum-runtime",
+    "crates/ignitum-compiler"
+]
+resolver = "2"

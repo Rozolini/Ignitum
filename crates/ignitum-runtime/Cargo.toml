@@ -1,0 +1,12 @@
+# Execution engine and resource management for the Ignitum WebAssembly runtime.
+# Orchestrates instance lifecycles, memory isolation, and safe JIT invocation.
+[package]
+name = "ignitum-runtime"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Internal Architecture Components
+
+# Core JIT backend for hardware-assisted traps and executable memory management.
+ignitum-jit = { path = "../ignitum-jit" }

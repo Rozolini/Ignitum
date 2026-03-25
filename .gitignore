@@ -1,0 +1,23 @@
+# --- Build & Binary ---
+/target/
+Cargo.lock
+
+# --- IDEs ---
+.idea/
+.vscode/
+*.iml
+*.sln
+*.vcxproj
+*.user
+
+# --- OS & Temp ---
+.DS_Store
+Thumbs.db
+*.swp
+*.bak
+*~
+
+# --- Analysis & Profiling ---
+/callgrind.out.*
+/*.perf
+/*.lprof

@@ -1,0 +1,28 @@
+# Low-level JIT backend for the Ignitum WebAssembly engine.
+# Provides x86_64 code generation, executable memory management (W^X),
+# and hardware-level exception handling (VEH).
+[package]
+name = "ignitum-jit"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Windows API bindings for system-level memory and diagnostic operations.
+windows-sys = { version = "0.61.2", features = [
+    "Win32_Foundation",                # Basic types and error codes
+    "Win32_System_Memory",            # VirtualAlloc/VirtualProtect (W^X enforcement)
+    "Win32_System_Diagnostics_Debug", # Vectored Exception Handling (Trap catching)
+    "Win32_System_Threading",         # TLS for per-thread trap contexts
+    "Win32_System_Kernel"             # Low-level processor primitives
+] }
+
+# Permissive loom dependency for standard builds.
+loom = { version = "0.7.2", optional = true }
+
+[target.'cfg(loom)'.dependencies]
+# Specific loom integration for concurrency model checking.
+loom = "0.7"
+
+[lints.rust]
+# Suppress warnings for the custom 'loom' configuration flag.
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(loom)'] }
